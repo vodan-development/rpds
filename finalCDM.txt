@@ -13,6 +13,7 @@
 #################################################################
 # 1. CORE CLASSES
 #################################################################
+
 hds:Incident a owl:Class ;
     rdfs:label "Incident" ;
     rdfs:comment "A security or humanitarian event recorded in the field." ;
