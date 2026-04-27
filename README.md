@@ -1,7 +1,7 @@
-FieldLab1 – Secure FAIR Refugee Protection Information System
+Secure FAIR Refugee Protection Data System (RPDS)
 1. Project Overview
 
-This repository contains the final implementation of FieldLab1, a secure and FAIR-aligned application designed to support the structured collection, management, and semantic publication of refugee protection information in humanitarian contexts.
+This is a secure and FAIR-aligned application designed to support the structured collection, management, and semantic publication of refugee protection information in humanitarian contexts.
 
 The project addresses challenges related to:
 
@@ -178,8 +178,6 @@ Cross-FieldLab semantic interoperability
 12. License
 
 This repository is intended for educational and research purposes within the Data Science in Practice course.
-
-
 
 
 
