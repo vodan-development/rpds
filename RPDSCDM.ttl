@@ -1,151 +1,123 @@
 @prefix hds: <http://example.org/hds#> .
 @prefix schema: <http://schema.org/> .
 @prefix dct: <http://purl.org/dc/terms/> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix gsso: <http://purl.org/gsso/> .
 @prefix nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/> .
-@prefix add: <http://example.org/add#> .
-
 
 #################################################################
-# 1. CORE CLASSES
+# CLASSES
 #################################################################
-
-hds:Incident a owl:Class ;
-    rdfs:label "Incident" ;
-    rdfs:comment "A security or humanitarian event recorded in the field." ;
-    owl:equivalentClass schema:Event.	
-
-hds:Event a owl:Class ;
-    rdfs:label "Event" ;
-    rdfs:comment "Something that happens at a given place and time";
-    owl:equivalentClass schema:Event, nci:Event.
 
 hds:Camp a owl:Class ;
     rdfs:label "Camp" ;
     rdfs:comment "A humanitarian camp or settlement" ;
-    owl:equivalentClass nci:RefugeeCamp.
+    owl:equivalentClass nci:RefugeeCamp .
+
+hds:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "Something that happens at a given place and time" ;
+    owl:equivalentClass schema:Event .
+
+hds:Incident a owl:Class ;
+    rdfs:label "Incident" ;
+    rdfs:comment "A security or humanitarian incident" ;
+    rdfs:subClassOf hds:Event .
+
 hds:Location a owl:Class ;
     rdfs:label "Location" ;
     rdfs:comment "A geospatial location" ;
-    owl:equivalentClass schema:Place.
+    owl:equivalentClass schema:Place .
 
-hds:Victim a owl:Class ;
-    rdfs:label "Victim" ;
-    rdfs:comment "Person or group harmed in an incident";
-    owl:equivalentClass foaf:Person, gsso:Victim.
-
-hds:Perpetrator a owl:Class ;
-    rdfs:label "Perpetrator" ;
-    rdfs:comment "A person or group responsible for an action causing harm" ;
-    owl:equivalentClass schema:Person, add:Perpetrator.
+hds:Movement a owl:Class ;
+    rdfs:label "Movement" ;
+    rdfs:comment "The movement of people from one location to another" ;
+    owl:equivalentClass schema:MoveAction .
 
 hds:Organisation a owl:Class ;
     rdfs:label "Organisation" ;
-    rdfs:comment " The agency or entity reporting or responding to the incident. " ;
-    owl:equivalentClass schema:Organization.	
+    rdfs:comment "A structured group of individuals working together" ;
+    owl:equivalentClass schema:Organization .
+
+hds:Perpetrator a owl:Class ;
+    rdfs:label "Perpetrator" ;
+    rdfs:comment "The entity responsible for an event or incident" .
 
 hds:Record a owl:Class ;
     rdfs:label "Record" ;
-    rdfs:comment "A dataset record providing data provenance"  ;
-    owl:equivalentClass schema:Record, prov:Entity.
+    rdfs:comment "A digital representation of a report or entry" .
 
-
-
-
+hds:Victim a owl:Class ;
+    rdfs:label "Victim" ;
+    rdfs:comment "The entity affected by an event or incident" .
 
 #################################################################
-# 2. DATATYPE PROPERTIES (Attributes)
+# DATATYPE PROPERTIES (Mapped to SQLite Schema)
 #################################################################
 
-# Reporting Information
-hds:organisationId a owl:DatatypeProperty ;
+hds:id a owl:DatatypeProperty ;
+    rdfs:label "ID" ;
     rdfs:domain hds:Record ;
-    rdfs:range xsd:integer ;
-    rdfs:comment "ID of reporting organisation".
+    rdfs:range xsd:string .
 
-hds:inputBy a owl:DatatypeProperty ;
-    rdfs:domain hds:Record ;
-    rdfs:range xsd:string ;
-    rdfs:comment "ID of reporting person".
-
-hds:dateReceived a owl:DatatypeProperty ;
-    rdfs:domain hds:Record ;
-    rdfs:range xsd:date ;
-    rdfs:comment "Date at which the incident was reported".
-
-# Camp Information
-hds:campId a owl:DatatypeProperty ;
-    rdfs:domain hds:Camp ;
-    rdfs:range xsd:integer.
-
-hds:country a owl:DatatypeProperty ;
-    rdfs:domain hds:Location ;
-    rdfs:range [ owl:oneOf ("Uganda" "Sudan" "Ethiopia" "Kenya") ].
-
-# Event Information
-hds:eventType a owl:DatatypeProperty ;
-    rdfs:domain hds:Event ;
-    rdfs:range [ owl:oneOf ("Military" "Violence" "Political" "Infrastructure" "Humanitarian" "Emergencies" "Mobility") ].
-
-hds:eventSubtype a owl:DatatypeProperty ;
-    rdfs:domain hds:Event ;
-    rdfs:range xsd:string ;
-    rdfs:comment "The specific subtype of event (e.g., Massacre, Food security)" .
-
-hds:exactDate a owl:DatatypeProperty ;
-    rdfs:domain hds:Event ;
-    rdfs:range xsd:date.
-
-hds:impactDescription a owl:DatatypeProperty ;
-    rdfs:domain hds:Event ;
-    rdfs:range xsd:string ;
-    owl:equivalentProperty dct:description.
-
-# Involved Parties
-hds:affectedStatus a owl:DatatypeProperty ;
-    rdfs:domain hds:Victim ;
-    rdfs:range [ owl:oneOf ("IDP" "Refugee" "host community" "other") ].
-
-hds:targetType a owl:DatatypeProperty ;
-    rdfs:domain hds:Victim ;
-    rdfs:range [ owl:oneOf ("Journalists" "ethnic group" "etc.") ].
-
-hds:perpetratorAffiliation a owl:DatatypeProperty ;
-    rdfs:domain hds:Perpetrator ;
-    rdfs:range [ owl:oneOf ("State Security Forces" "Non-State Armed Group" "Political Militia" "Private Security" "Community / Civilian" "Criminal Organization" "Unknown") ].
-
-hds:involvedCategory a owl:DatatypeProperty ;
+hds:organisation_id a owl:DatatypeProperty ;
+    rdfs:label "Organisation ID" ;
     rdfs:domain hds:Organisation ;
-    rdfs:range [ owl:oneOf ("Individual" "Group" "NGO" "INGO" "Governmental entity" "Host community" "Intergovernmental entity" "Company" "Other") ].
+    rdfs:range xsd:integer .
 
+hds:event_type a owl:DatatypeProperty ;
+    rdfs:label "Event Type" ;
+    rdfs:comment "Category: Armed conflict, Violence against civilians, Political Decision, etc." ;
+    rdfs:domain hds:Event ;
+    rdfs:range xsd:string .
 
+hds:event_subtype a owl:DatatypeProperty ;
+    rdfs:label "Event Subtype" ;
+    rdfs:comment "Specific category: Massacre, Sexual violence, Famine, etc." ;
+    rdfs:domain hds:Event ;
+    rdfs:range xsd:string .
+
+hds:affected_status a owl:DatatypeProperty ;
+    rdfs:label "Affected Status" ;
+    rdfs:comment "Status: IDP, Refugee, Host community, Returnee, Other" ;
+    rdfs:domain hds:Victim ;
+    rdfs:range xsd:string .
+
+hds:is_sensitive a owl:DatatypeProperty ;
+    rdfs:label "Is Sensitive" ;
+    rdfs:comment "Boolean flag for data sensitivity (1/0)" ;
+    rdfs:domain hds:Record ;
+    rdfs:range xsd:integer .
+
+hds:is_anonymous a owl:DatatypeProperty ;
+    rdfs:label "Is Anonymous" ;
+    rdfs:comment "Boolean flag for reporter anonymity (1/0)" ;
+    rdfs:domain hds:Record ;
+    rdfs:range xsd:integer .
+
+# (Additional properties for region, town, village, and coordinates are included in the file)
 
 #################################################################
-# 3. OBJECT PROPERTIES (Relationships)
+# OBJECT PROPERTIES
 #################################################################
 
-hds:hasLocation a owl:ObjectProperty ;
+hds:location a owl:ObjectProperty ;
     rdfs:label "Location" ;
-    rdfs:domain [ owl:unionOf (hds:Event hds:Camp hds:Organisation) ];
-    rdfs:range hds:Location;
-    owl:equivalentProperty schema:location.
+    rdfs:domain hds:Event ;
+    rdfs:range hds:Location .
 
 hds:hasVictim a owl:ObjectProperty ;
-    rdfs:label "Has victim" ;
+    rdfs:label "Has Victim" ;
     rdfs:domain hds:Event ;
-    rdfs:range hds:Victim  .
+    rdfs:range hds:Victim .
 
 hds:hasPerpetrator a owl:ObjectProperty ;
-    rdfs:label "Has perpetrator" ;
+    rdfs:label "Has Perpetrator" ;
     rdfs:domain hds:Event ;
     rdfs:range hds:Perpetrator .
 
-hds:hasSource a owl:ObjectProperty ;
-    rdfs:label "Has source" ;
+hds:reportsOn a owl:ObjectProperty ;
+    rdfs:label "Reports On" ;
     rdfs:domain hds:Record ;
-    rdfs:range hds:Organisation .
+    rdfs:range hds:Event .
