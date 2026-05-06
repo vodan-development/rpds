@@ -32,10 +32,14 @@ def init_db():
             role TEXT,
             organisation_id INTEGER,
             input_by TEXT,
+            date_received TEXT,
             date_recorded TEXT,
+            camp_name TEXT,
+            camp_id INTEGER,
             country TEXT,
             region TEXT,
-            camp TEXT,
+            town TEXT,
+            village_name TEXT,
             latitude REAL,
             longitude REAL,
             event_date TEXT,
@@ -45,7 +49,15 @@ def init_db():
             event_subtype TEXT,
             affected_status TEXT,
             affected_number INTEGER,
+            ethnicity TEXT,
+            affected_target TEXT,            
             impact_description TEXT,
+            affiliation TEXT,
+            age INTEGER,
+            gender TEXT,
+            perpetrator_description TEXT,
+            involved_category TEXT,
+            involvement_description TEXT,
             is_sensitive INTEGER,
             is_anonymous INTEGER,
             created_at TEXT
@@ -54,3 +66,20 @@ def init_db():
     )
     conn.commit()
     conn.close()
+
+#----------------------------------------------------------------------------------------#
+#--- DELETE Definition Start here -------#
+#It works, you can uncomment 
+# Please ensure that lines 627–657 in app.py are also uncommented and implemented.
+#April 29,2026
+#----------------------------------------------------------------------------------------#
+
+
+# def delete_case(case_id):
+#     """Deletes a case record by ID from the SQLite database."""
+#     conn = get_connection()
+#     cur = conn.cursor()
+#     cur.execute("DELETE FROM cases WHERE id = ?", (case_id,))
+#     conn.commit()
+#     conn.close()
+#--- DELETE Definition end here -------#    
