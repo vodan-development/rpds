@@ -9,6 +9,7 @@ import os
 import requests
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, XSD, DCTERMS, PROV
+from dotenv import load_dotenv; load_dotenv()
 
 # ---------------------------------------------------------
 # RDF NAMESPACES (Aligned with RPDSCDM.ttl)
@@ -21,24 +22,17 @@ BASE = Namespace("https://fieldlab1.example.org/resource/")
 GEO = Namespace("http://www.w3.org/2003/01/geo/wgs84_pos#")
 
 # ---------------------------------------------------------
-# CONFIGURATION
-# Set your AllegroGraph connection details below.
+# AllegroGraph Configuration (from .env)
 # ---------------------------------------------------------
 
-# URL Options: Localhost, Remote IP, or Cloud Instance
-AG_SERVER_URL = "https://ag1cs8d8ltq258d5.allegrograph.cloud"                   #http://10.189.76.100:10035"#http://localhost:10035/"       #"http://10.189.76.100:10035"   #"https://ag14402pptsl6sx7.allegrograph.cloud"
-
-# Repository Name
-AG_REPOSITORY = "RPDS_Tut"    #"RPDS"  
-
-# Authentication
-AG_USERNAME = "admin"       
-AG_PASSWORD = "7SrXaNJQlgYmHixSgSCDd3"
+AG_SERVER_URL = os.getenv("AG_BASE_URL") 
+AG_REPOSITORY = os.getenv("AG_REPO")
+AG_USERNAME = os.getenv("AG_USER")     
+AG_PASSWORD = os.getenv("AG_PASSWORD")
 
 SPARQL_ENDPOINT = f"{AG_SERVER_URL}/repositories/{AG_REPOSITORY}/sparql"
 
-
-# Define your local path
+# Define your Application CDM local path
 CDM_PATH = "RPDSCDM.ttl" 
 
 
@@ -59,7 +53,6 @@ def load_local_cdm():
 
 # Add this helper function 
 # Ensures a string can be converted to a valid ISO datetime; returns None if invalid
-
 def safe_date_convert(val, is_datetime=True):
     """Ensures a string can be converted to a valid ISO datetime; returns None if invalid."""
     try:
@@ -73,14 +66,11 @@ def safe_date_convert(val, is_datetime=True):
 
 
 def dataframe_to_rdf(df: pd.DataFrame) -> bytes:
-    """
-    Transforms tabular case data into a FAIR-compliant Knowledge Graph
-    using the local hds: Common Data Model.
-    """
-
+    # Transforms tabular case data into a FAIR-compliant Knowledge Graph
+    # using the local HDS Common Data Model.
     g = Graph()
 
-     # 2. Normalize column names to lowercase and underscores
+    # Normalize column names to lowercase and underscores
     df.columns = [c.lower().strip().replace(" ", "_") for c in df.columns]
 
     g.bind("hds", HDS)
@@ -89,7 +79,7 @@ def dataframe_to_rdf(df: pd.DataFrame) -> bytes:
     g.bind("dct", DCTERMS)
     g.bind("prov", PROV)
  
-     # --- HERE IS THE USE OF THE LOCAL CDM April 29 ,2026---
+    # --- HERE IS THE USE OF THE LOCAL CDM April 29 ,2026 ---
     cdm_ref = load_local_cdm()
 
     # Use an empty Graph as a fallback if the file is missing to avoid NoneType errors
@@ -98,7 +88,6 @@ def dataframe_to_rdf(df: pd.DataFrame) -> bytes:
       print("Warning: CDM reference is empty. Proceeding with default mapping.")
     else:
       print(f"Aligning data with {len(cdm_ref)} local CDM definitions.")
-    # ----------------------------------------
 
     # You can now use cdm_ref to validate classes or fetch labels
     # while building your export graph (g)
@@ -182,9 +171,7 @@ def dataframe_to_rdf(df: pd.DataFrame) -> bytes:
 
    
 def upload_to_allegrograph(rdf_turtle: bytes):
-    """
-       Securely upload RDF data to AllegroGraph statements endpoint.
-    """
+    # Securely upload RDF data to AllegroGraph statements endpoint.
     endpoint = f"{AG_SERVER_URL}/repositories/{AG_REPOSITORY}/statements"
     headers = {"Content-Type": "text/turtle"}
 
