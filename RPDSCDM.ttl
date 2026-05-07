@@ -1,0 +1,123 @@
+@prefix hds: <http://example.org/hds#> .
+@prefix schema: <http://schema.org/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix nci: <http://ncicb.nci.nih.gov/xml/owl/EVS/> .
+
+#################################################################
+# CLASSES
+#################################################################
+
+hds:Camp a owl:Class ;
+    rdfs:label "Camp" ;
+    rdfs:comment "A humanitarian camp or settlement" ;
+    owl:equivalentClass nci:RefugeeCamp .
+
+hds:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "Something that happens at a given place and time" ;
+    owl:equivalentClass schema:Event .
+
+hds:Incident a owl:Class ;
+    rdfs:label "Incident" ;
+    rdfs:comment "A security or humanitarian incident" ;
+    rdfs:subClassOf hds:Event .
+
+hds:Location a owl:Class ;
+    rdfs:label "Location" ;
+    rdfs:comment "A geospatial location" ;
+    owl:equivalentClass schema:Place .
+
+hds:Movement a owl:Class ;
+    rdfs:label "Movement" ;
+    rdfs:comment "The movement of people from one location to another" ;
+    owl:equivalentClass schema:MoveAction .
+
+hds:Organisation a owl:Class ;
+    rdfs:label "Organisation" ;
+    rdfs:comment "A structured group of individuals working together" ;
+    owl:equivalentClass schema:Organization .
+
+hds:Perpetrator a owl:Class ;
+    rdfs:label "Perpetrator" ;
+    rdfs:comment "The entity responsible for an event or incident" .
+
+hds:Record a owl:Class ;
+    rdfs:label "Record" ;
+    rdfs:comment "A digital representation of a report or entry" .
+
+hds:Victim a owl:Class ;
+    rdfs:label "Victim" ;
+    rdfs:comment "The entity affected by an event or incident" .
+
+#################################################################
+# DATATYPE PROPERTIES (Mapped to SQLite Schema)
+#################################################################
+
+hds:id a owl:DatatypeProperty ;
+    rdfs:label "ID" ;
+    rdfs:domain hds:Record ;
+    rdfs:range xsd:string .
+
+hds:organisation_id a owl:DatatypeProperty ;
+    rdfs:label "Organisation ID" ;
+    rdfs:domain hds:Organisation ;
+    rdfs:range xsd:integer .
+
+hds:event_type a owl:DatatypeProperty ;
+    rdfs:label "Event Type" ;
+    rdfs:comment "Category: Armed conflict, Violence against civilians, Political Decision, etc." ;
+    rdfs:domain hds:Event ;
+    rdfs:range xsd:string .
+
+hds:event_subtype a owl:DatatypeProperty ;
+    rdfs:label "Event Subtype" ;
+    rdfs:comment "Specific category: Massacre, Sexual violence, Famine, etc." ;
+    rdfs:domain hds:Event ;
+    rdfs:range xsd:string .
+
+hds:affected_status a owl:DatatypeProperty ;
+    rdfs:label "Affected Status" ;
+    rdfs:comment "Status: IDP, Refugee, Host community, Returnee, Other" ;
+    rdfs:domain hds:Victim ;
+    rdfs:range xsd:string .
+
+hds:is_sensitive a owl:DatatypeProperty ;
+    rdfs:label "Is Sensitive" ;
+    rdfs:comment "Boolean flag for data sensitivity (1/0)" ;
+    rdfs:domain hds:Record ;
+    rdfs:range xsd:integer .
+
+hds:is_anonymous a owl:DatatypeProperty ;
+    rdfs:label "Is Anonymous" ;
+    rdfs:comment "Boolean flag for reporter anonymity (1/0)" ;
+    rdfs:domain hds:Record ;
+    rdfs:range xsd:integer .
+
+# (Additional properties for region, town, village, and coordinates are included in the file)
+
+#################################################################
+# OBJECT PROPERTIES
+#################################################################
+
+hds:location a owl:ObjectProperty ;
+    rdfs:label "Location" ;
+    rdfs:domain hds:Event ;
+    rdfs:range hds:Location .
+
+hds:hasVictim a owl:ObjectProperty ;
+    rdfs:label "Has Victim" ;
+    rdfs:domain hds:Event ;
+    rdfs:range hds:Victim .
+
+hds:hasPerpetrator a owl:ObjectProperty ;
+    rdfs:label "Has Perpetrator" ;
+    rdfs:domain hds:Event ;
+    rdfs:range hds:Perpetrator .
+
+hds:reportsOn a owl:ObjectProperty ;
+    rdfs:label "Reports On" ;
+    rdfs:domain hds:Record ;
+    rdfs:range hds:Event .
