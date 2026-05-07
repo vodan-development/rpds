@@ -2,3 +2,4 @@
 # Mainly for cache files, secrets etc.
 .env
 __pycache__
+rpds.db
