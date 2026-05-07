@@ -1,7 +1,5 @@
-"""
-db.py – SQLite helper functions for FieldLab1 prototype.
-This keeps all database-related code separate from the UI.
-"""
+# db.py – SQLite helper functions for RPDS
+# This keeps all database-related code separate from the UI.
 
 from pathlib import Path
 import sqlite3
@@ -11,18 +9,13 @@ DB_PATH = Path("rpds.db")
 
 
 def get_connection():
-    """
-    Open a connection to the SQLite database.
-    Each call returns a new connection; the caller must close it.
-    """
+    # Open a connection to the SQLite database.
+    # Each call returns a new connection; the caller must close it.
     return sqlite3.connect(DB_PATH)
 
-
 def init_db():
-    """
-    Create the 'cases' table if it does not exist.
-    The schema here matches the fields we collect in the form.
-    """
+    # Create the 'cases' table if it does not exist.
+    # The schema here matches the fields we collect in the form.
     conn = get_connection()
     cur = conn.cursor()
     cur.execute(
