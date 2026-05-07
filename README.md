@@ -5,10 +5,10 @@ This repository contains the FAIR-aligned application designed for the structure
 
 ## 2. Core Objectives
 
-   - ✅ **Secure Reporting**: Provide a user-friendly, multilingual interface for field workers to report sensitive incidents.
-   - ✅ **FAIR Implementation**: Transform raw data into RDF triples using a Common Data Model (CDM).
-   - ✅ **Semantic Integration**: Store and query data via AllegroGraph using SPARQL endpoints.
-   - ✅ **Access Control**: Implement role-based viewing (Admin, Sector Officer, Field Worker) to manage data sensitivity.
+  - ✅ **Secure Reporting**: Provide a user-friendly, multilingual interface for field workers to report sensitive incidents.
+  - ✅ **FAIR Implementation**: Transform raw data into RDF triples using a Common Data Model (CDM).
+  - ✅ **Semantic Integration**: Store and query data via AllegroGraph using SPARQL endpoints.
+  - ✅ **Access Control**: Implement role-based viewing (Admin, Sector Officer, Field Worker) to manage data sensitivity.
 
 ## 3. System Architecture
 The application follows a modular architecture:
@@ -37,12 +37,11 @@ The application follows a modular architecture:
    
     Anaconda 26+
    
-   *Go to* 
-   <https://www.anaconda.com/download>
+   *Go to* <https://www.anaconda.com/download>
 
    Install Python
     
-     Python 3.13+
+    Python 3.13+
    *Go to* 
    <https://www.python.org/downloads/>
   
