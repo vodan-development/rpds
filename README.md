@@ -12,7 +12,7 @@ This repository contains the FAIR-aligned application designed for the structure
 ## 3. System Architecture
 The application follows a modular architecture:\
   ✅ **Frontend (Streamlit)**: Streamlit-based UI for data entry and SPARQL querying.A supporting multilingual UI  English, Amharic, and Tigrigna.\
-  ✅ **Storage (SQLite)**: Local database (rpds.db) for temporary data persistence before RDF transformation.\  
+  ✅ **Storage (SQLite)**: Local database (rpds.db) for temporary data persistence before RDF transformation.\
   ✅ **ETL Pipeline (rdflib)**: Converts SQLite records into RDF (Turtle format) using standardized namespaces (FAIR, GEO, CDM).\
   ✅ **Triple Store (AllegroGraph)**: Semantic storage and SPARQL endpoint for federated data access.
 
