@@ -31,13 +31,11 @@ The application follows a modular architecture:
   ### Prerequisites
   Ensure you have Python and Miniconda installed.
   #### 1. Install Miniconda (lightweight installer)
-    https://www.anaconda.com/download/success?reg=skipped
+    <https://www.anaconda.com/download/success?reg=skipped>
 
   #### 2. Install Python
-    
-  Python 3.13+
-   *Go to* 
-   <https://www.python.org/downloads/>
+  Get the latest python installer
+    <https://www.python.org/downloads/>
   
   
 ```markdown
