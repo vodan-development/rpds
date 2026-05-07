@@ -7,7 +7,7 @@ from pathlib import Path
 import sqlite3
 
 # Path to the SQLite database file
-DB_PATH = Path("fieldlab1.db")
+DB_PATH = Path("rpds.db")
 
 
 def get_connection():
