@@ -30,10 +30,10 @@ The application follows a modular architecture:
 ## 5. Installation & Setup
   ### Prerequisites
   Ensure you have Python and Miniconda installed.
-  Install Miniconda (lightweight installer)
+  #### 1. Install Miniconda (lightweight installer)
     https://www.anaconda.com/download/success?reg=skipped
 
-  Install Python
+  #### 2. Install Python
     
   Python 3.13+
    *Go to* 
