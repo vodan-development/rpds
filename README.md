@@ -17,7 +17,7 @@ The application follows a modular architecture:\
   ✅ **Triple Store (AllegroGraph)**: Semantic storage and SPARQL endpoint for federated data access.
 
 ## 4. Technical Specifications
-  ### Data Schema (`schema.py`)
+  ### Data Input Schema (`schema.py`)
   The system utilizes a controlled vocabulary for:
   - **Event Types**: Armed conflict, Violence against civilians, Political Decision, Forced displacement, etc.
   - **Location Registry**: Pre-defined camps across Ethiopia (Tigray, Amhara), Sudan, Uganda, and Kenya.
