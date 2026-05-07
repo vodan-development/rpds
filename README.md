@@ -4,7 +4,6 @@
 This repository contains the FAIR-aligned application designed for the structured collection, management, and semantic publication of refugee protection information. In collaboration by the **Aksum University Group** (Zinabu Haile, Haftom Mekonnen), this system bridges the gap between grassroots field reporting and high-level semantic interoperability.
 
 ## 2. Core Objectives
-
   - ✅ **Secure Reporting**: Provide a user-friendly, multilingual interface for field workers to report sensitive incidents.
   - ✅ **FAIR Implementation**: Transform raw data into RDF triples using a Common Data Model (CDM).
   - ✅ **Semantic Integration**: Store and query data via AllegroGraph using SPARQL endpoints.
@@ -24,20 +23,15 @@ The application follows a modular architecture:
   - **Location Registry**: Pre-defined camps across Ethiopia (Tigray, Amhara), Sudan, Uganda, and Kenya.
   - **Multilingual Labels**: All UI elements and data categories are mapped in English (en), Amharic (am), and Tigrigna (ti).
 
- ### Database & ETL (`# db.py, etl.py`)
-
+### Database & ETL (`# db.py, etl.py`)
   - **SQLite Schema**: Tracks 33 fields including incident coordinates, perpetrator descriptions, and sensitivity flags.
   - **RDF Mapping**: Uses BASE, CDM, and GEO namespaces to ensure data is Findable and Interoperable.
 
 ## 5. Installation & Setup
-  **Prerequisites**
-  Ensure you have Python and Anaconda installed. You will need the following libraries:
-   
-   Install Anaconda
-   
-    Anaconda 26+
-   
-   *Go to* <https://www.anaconda.com/download>
+  ### Prerequisites
+  Ensure you have Python and Miniconda installed.
+  Install Miniconda (lightweight installer)
+  *Go to* <https://www.anaconda.com/download/success?reg=skipped>
 
    Install Python
     
