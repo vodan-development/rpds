@@ -4,6 +4,7 @@ import pandas as pd
 import requests  # for SPARQL HTTP requests
 import plotly.express as px 
 import os 
+from dotenv import load_dotenv; load_dotenv()
 from db import get_connection, init_db
 from schema import LOCATION_REGISTRY, EVENT_TYPES, AFFECTED_STATUSES, LABELS, SUBEVENT_TYPES, AFFECTED_TARGET,AFFILIATION,GENDER,INVOLVED_CATEGORY    # SUBEVENT_TYPES Part of schema New Addded 
 from etl import (
@@ -77,7 +78,7 @@ def check_password():
             with st.container():
                 if os.path.exists(img_path):
                      st.image(img_path, width=300) # Adjust width as needed
-                    # st.sidebar.image(img_path, use_container_width=True)
+                    # st.sidebar.image(img_path, use_container_width="stretch")
                 else:
                     # This prevents the MediaFileStorageError by checking existence first
                     st.sidebar.error("⚠️ logo.png not found in directory")
@@ -90,12 +91,27 @@ def check_password():
                     user_input = st.text_input("Username")
                     pw_input = st.text_input("Password", type="password")
                     
-                    if st.button("Sign In", use_container_width=True):
+                    if st.button("Sign In", use_container_width="stretch"):
                         users = {
-                            "admin": {"pwd": "admin123", "role": "Admin"},
-                            "officer": {"pwd": "officer123", "role": "Sector Officer"},
-                            "worker": {"pwd": "worker123", "role": "Field Worker"}
+                            os.getenv("ADMIN_USER"): {
+                                "pwd": os.getenv("ADMIN_PASSWORD"), 
+                                "role": "Admin"
+                            },
+                            os.getenv("SECTOR_OFFICER_USER"): {
+                                "pwd": os.getenv("SECTOR_OFFICER_PASSWORD"), 
+                                "role": "Sector Officer"
+                            },
+                            os.getenv("FIELD_OFFICER_USER"): {
+                                "pwd": os.getenv("FIELD_OFFICER_PASSWORD"), 
+                                "role": "Field Worker"
+                            }
                         }
+                        
+                        # users = {
+                        #     "admin": {"pwd": "admin123", "role": "Admin"},
+                        #     "officer": {"pwd": "officer123", "role": "Sector Officer"},
+                        #     "worker": {"pwd": "worker123", "role": "Field Worker"}
+                        # }
                         
                         if user_input in users and pw_input == users[user_input]["pwd"]:
                             st.session_state["authenticated"] = True
@@ -453,7 +469,7 @@ if check_password():
                 )
                 conn.commit()
                 conn.close()
-                st.success("Report saved successfully to local database (fieldlab1.db).")
+                st.success("Report saved successfully to local database (rpds.db).")
 
 
     # ---------------------------------------------------------
@@ -507,7 +523,7 @@ if check_password():
                     size="affected_number", hover_name="village_name", zoom=5, height=500
                 )
                 fig_map.update_layout(mapbox_style="open-street-map", margin={"r":0,"t":0,"l":0,"b":0})
-                st.plotly_chart(fig_map, use_container_width=True)
+                st.plotly_chart(fig_map, use_container_width="stretch")
             else:
                 st.info("No GPS coordinates found to map.")
 
@@ -515,22 +531,21 @@ if check_password():
             st.subheader("Incident Trends")
             timeline_df = df.groupby('event_date').size().reset_index(name='count')
             fig_line = px.line(timeline_df, x='event_date', y='count', markers=True, title="Incident Volume")
-            st.plotly_chart(fig_line, use_container_width=True)
+            st.plotly_chart(fig_line, use_container_width="stretch")
 
         with tab_risk:
             col_l, col_r = st.columns(2)
             with col_l:
                 st.subheader("Severity by Event Type")
                 fig_sun = px.sunburst(df, path=['event_type', 'event_subtype'], values='affected_number')
-                st.plotly_chart(fig_sun, use_container_width=True)
+                st.plotly_chart(fig_sun, use_container_width="stretch")
             with col_r:
                 st.subheader("Impact by Ethnicity")
                 fig_bar = px.bar(df, x="ethnicity", y="affected_number", color="affected_status", barmode="group")
-                st.plotly_chart(fig_bar, use_container_width=True)
-
+                st.plotly_chart(fig_bar, use_container_width="stretch")
         # 5. DATA TABLE
         with st.expander("🔍 Detailed Case Ledger"):
-            st.dataframe(df.sort_values(by='created_at', ascending=False), use_container_width=True)
+            st.dataframe(df.sort_values(by='created_at', ascending=False), use_container_width="stretch")
 
 
     if page == "View cases":
@@ -605,7 +620,7 @@ if check_password():
                     filtered_df = filtered_df[filtered_df["Sensitive"] == "No"]
 
             st.markdown(f"Showing **{len(filtered_df)}** case(s) after filters.")
-            st.dataframe(filtered_df, use_container_width=True)
+            st.dataframe(filtered_df, use_container_width="stretch")
 
             if not filtered_df.empty:
                 st.markdown("### Case details")
@@ -812,7 +827,7 @@ LIMIT 25"""
                         formatted_rows = [{c: b[c]["value"] for c in cols if c in b} for b in bindings]
                         res_df = pd.DataFrame(formatted_rows)
                         st.subheader(f"Results ({len(res_df)})")
-                        st.dataframe(res_df, use_container_width=True)
+                        st.dataframe(res_df, use_container_width="stretch")
                 else:
                     st.error(f"SPARQL Error: {resp.text}")
             except Exception as e:
