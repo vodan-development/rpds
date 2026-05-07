@@ -10,7 +10,7 @@ This repository contains the FAIR-aligned application designed for the structure
   ✅ **Access Control**: Implement role-based viewing (Admin, Sector Officer, Field Worker) to manage data sensitivity.
 
 ## 3. System Architecture
-The application follows a modular architecture:
+The application follows a modular architecture:\
   ✅ **Frontend (Streamlit)**: Streamlit-based UI for data entry and SPARQL querying.A supporting multilingual UI  English, Amharic, and Tigrigna.\
   ✅ **Storage (SQLite)**: Local database (rpds.db) for temporary data persistence before RDF transformation.\  
   ✅ **ETL Pipeline (rdflib)**: Converts SQLite records into RDF (Turtle format) using standardized namespaces (FAIR, GEO, CDM).\
