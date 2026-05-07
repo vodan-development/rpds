@@ -31,11 +31,11 @@ The application follows a modular architecture:
   ### Prerequisites
   Ensure you have Python and Miniconda installed.
   Install Miniconda (lightweight installer)
-  *Go to* <https://www.anaconda.com/download/success?reg=skipped>
+    https://www.anaconda.com/download/success?reg=skipped
 
-   Install Python
+  Install Python
     
-    Python 3.13+
+  Python 3.13+
    *Go to* 
    <https://www.python.org/downloads/>
   
