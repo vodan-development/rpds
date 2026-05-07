@@ -13,7 +13,7 @@ This repository contains the FAIR-aligned application designed for the structure
 ## 3. System Architecture
 The application follows a modular architecture:
    - ✅ **Frontend (Streamlit)**: Streamlit-based UI for data entry and SPARQL querying.A supporting multilingual UI  English, Amharic, and Tigrigna.
-   - ✅ **Storage (SQLite)**: Local database (fieldlab1.db) for temporary data persistence before RDF transformation.  
+   - ✅ **Storage (SQLite)**: Local database (rpds.db) for temporary data persistence before RDF transformation.  
    - ✅ **ETL Pipeline (rdflib)**: Converts SQLite records into RDF (Turtle format) using standardized namespaces (FAIR, GEO, CDM).
    - ✅ **Triple Store (AllegroGraph)**: Semantic storage and SPARQL endpoint for federated data access.
 
@@ -27,11 +27,11 @@ The application follows a modular architecture:
  ## Database & ETL (`# db.py, etl.py`)
 
   - **SQLite Schema**: Tracks 33 fields including incident coordinates, perpetrator descriptions, and sensitivity flags.
-   - **RDF Mapping**: Uses BASE, CDM, and GEO namespaces to ensure data is Findable and Interoperable.
+  - **RDF Mapping**: Uses BASE, CDM, and GEO namespaces to ensure data is Findable and Interoperable.
 
 ## 5. Installation & Setup
-   Prerequisites
-     Ensure you have Python and Anaconda installed. You will need the following libraries:
+  **Prerequisites**
+  Ensure you have Python and Anaconda installed. You will need the following libraries:
    
    Install Anaconda
    
