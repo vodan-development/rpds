@@ -18,7 +18,7 @@ from etl import (
 # ---------------------------------------------------------
 # BASIC APP CONFIGURATION
 # ---------------------------------------------------------
-st.set_page_config(page_title="FieldLab1 UI Prototype", layout="wide")
+st.set_page_config(page_title="Secure Refugee Data System (RPDS)", layout="wide")
 
 # Ensure DB and table exist
 init_db()
@@ -28,10 +28,8 @@ init_db()
 # TRANSLATION HELPERS
 # ---------------------------------------------------------
 def tr(key: str, default_en: str) -> str:
-    """
-    Translation helper for multilingual labels.
-    Supports English, Amharic (am), and Tigrigna (ti).
-    """
+    # Translation helper for multilingual labels.
+    # Supports English, Amharic (am), and Tigrigna (ti).
     if language.startswith("Amharic"):
         if key in LABELS and "am" in LABELS[key]:
             return f"{LABELS[key]['en']} / {LABELS[key]['am']}"
@@ -47,7 +45,7 @@ def tr(key: str, default_en: str) -> str:
 
 
 def section_header(title_en: str, title_am: str = "", title_ti: str = ""):
-    """Section header that supports English, Amharic, and Tigrigna."""
+    # Section header that supports English, Amharic, and Tigrigna.
     if language.startswith("Amharic") and title_am:
         st.subheader(f"{title_en} / {title_am}")
     elif language.startswith("Tigrigna") and title_ti:
@@ -59,7 +57,7 @@ def section_header(title_en: str, title_am: str = "", title_ti: str = ""):
 # AUTHENTICATION LOGIC (FAIR Access Control)
 # ---------------------------------------------------------
 def check_password():
-    """Returns True if the user has provided correct credentials."""
+    # Returns True if the user has provided correct credentials.
     if "authenticated" not in st.session_state:
         st.session_state["authenticated"] = False
 
@@ -68,10 +66,7 @@ def check_password():
         empty_left, center_col, empty_right = st.columns([1, 2, 1])
         
         with center_col:
-            # --- CENTERED VODAN 2026 LOGO ---
-            #LOGO_URL = "logo.png"
-            # --- BRANDING / LOGO SECTION ---
-            # Define the image path relative to this script
+            # Define the Logo image path relative to this script
             img_path = os.path.join(os.path.dirname(__file__), "logo.png")
 
             # Using a container to ensure everything stays grouped
@@ -83,9 +78,7 @@ def check_password():
                     # This prevents the MediaFileStorageError by checking existence first
                     st.sidebar.error("⚠️ logo.png not found in directory")
           
-                
-                
-                st.markdown("<h2 style='text-align: center;'>🔐 VODAN 2026 FieldLab1 Login </h2>", unsafe_allow_html=True)
+                st.markdown("<h2 style='text-align: center;'>🔐 Secure Refugee Data System (RPDS) Login </h2>", unsafe_allow_html=True)
                 
                 with st.container(border=True):
                     user_input = st.text_input("Username")
@@ -107,12 +100,6 @@ def check_password():
                             }
                         }
                         
-                        # users = {
-                        #     "admin": {"pwd": "admin123", "role": "Admin"},
-                        #     "officer": {"pwd": "officer123", "role": "Sector Officer"},
-                        #     "worker": {"pwd": "worker123", "role": "Field Worker"}
-                        # }
-                        
                         if user_input in users and pw_input == users[user_input]["pwd"]:
                             st.session_state["authenticated"] = True
                             st.session_state["user_role"] = users[user_input]["role"]
@@ -127,7 +114,7 @@ def check_password():
 # TRANSLATION HELPERS
 # ---------------------------------------------------------
 def tr(key: str, default_en: str) -> str:
-    """Translation helper for multilingual labels."""
+    # Translation helper for multilingual labels.
     if language.startswith("Amharic"):
         return f"{LABELS[key]['en']} / {LABELS[key]['am']}" if key in LABELS and "am" in LABELS[key] else default_en
     elif language.startswith("Tigrigna"):
@@ -135,8 +122,7 @@ def tr(key: str, default_en: str) -> str:
     return LABELS[key]["en"] if key in LABELS and "en" in LABELS[key] else default_en
 
 # ---------------------------------------------------------
-# PROTECTED APP CONTENT
-# # April 2026
+# PROTECTED APP CONTENT (April 2026 Update)
 # ---------------------------------------------------------
 if check_password():
     # 1. SIDEBAR CONFIGURATION (Locked to Session)
@@ -159,7 +145,7 @@ if check_password():
     # ---------------------------------------------------------
     # PAGE 1: SUBMIT 
     # This page has been updated to align with the new DIS
-    # April 2026
+    # April 2026 Update
     # ---------------------------------------------------------
     if page == "Submit report":
         st.title("Incident / Event Reporting Form")
@@ -210,7 +196,7 @@ if check_password():
                     step=1,
                     help="ID of the refugee or IDP camp.",
                 )
-            st.subheader("Location")#,"የተጎዱ","ዝተሃሰዩ ወገናት") Modify this sub_header later zinabu
+            st.subheader("Location")#,"የተጎዱ","ዝተሃሰዩ ወገናት")
             col_r1, col_r2, col_r3, col_r4 = st.columns(4) 
             with col_r1:   # New Added
                 all_countries = sorted({loc["country"] for loc in LOCATION_REGISTRY})
@@ -297,7 +283,7 @@ if check_password():
                 #     tr("event_subtype", "Subtype (optional)"),
                 #     help="More specific description, e.g. shelling, looting, GBV, checkpoint violence, etc.",
                 # )
-                #New modified to dropdown 
+                # New modified to dropdown 
                 event_subtype = st.selectbox(
                     tr("event_subtype", "The subtype of event that took place"),
                     SUBEVENT_TYPES,
@@ -307,7 +293,7 @@ if check_password():
             # 4. Involved Parties
             # Added Tigrigna title: "ዝምልከቶም ወገናት"
             section_header("4. Involved Parties", "ተዋናይ ወገኖች", "ዝምልከቶም ወገናት")
-            st.subheader("Affected")#,"የተጎዱ","ዝተሃሰዩ ወገናት") Modify this sub_header later zinabu
+            st.subheader("Affected")#,"የተጎዱ","ዝተሃሰዩ ወገናት")
             col_a1, col_a2, col_a3 = st.columns(3)
             with col_a1:
                 affected_status = st.selectbox(
@@ -336,7 +322,7 @@ if check_password():
                     help="Describe what happened, who was affected, and how.",
             )
 
-            st.subheader("Perpetrator(s)")#,"የተጎዱ","ዝተሃሰዩ ወገናት") Modify this sub_header later zinabu
+            st.subheader("Perpetrator(s)")#,"የተጎዱ","ዝተሃሰዩ ወገናት")
             col_p1, col_p2, col_p3 = st.columns(3)
             with col_p1:
                 affiliation = st.selectbox(
@@ -363,7 +349,7 @@ if check_password():
                     help="The description of the perpetrator(s)",
             )
 
-            st.subheader("Involved")#,"የተጎዱ","ዝተሃሰዩ ወገናት") Modify this sub_header later zinabu
+            st.subheader("Involved")#,"የተጎዱ","ዝተሃሰዩ ወገናት") 
             #col_a1, col_a2 = st.columns(2)
             #with col_a1:
             involved_category = st.selectbox(
@@ -397,7 +383,7 @@ if check_password():
             submitted = st.form_submit_button("Submit report")
 
         #-----------------------------------------#
-        #        Handle submission
+        # Handle submission
         #-----------------------------------------#
         if submitted:
             # 1. Define mandatory fields for validation
@@ -555,16 +541,16 @@ if check_password():
         cur = conn.cursor()
         cur.execute(
             """
-        SELECT 
-            id, role, organisation_id, input_by, date_received, date_recorded,
-            camp_name, camp_id, country, region, town, village_name,
-            latitude, longitude, event_date, time_range, event_location_detail,
-            event_type, event_subtype, affected_status, affected_number,
-            ethnicity, affected_target, impact_description, affiliation,
-            age, gender, perpetrator_description, involved_category,
-            involvement_description, is_sensitive, is_anonymous, created_at
-        FROM cases
-        ORDER BY datetime(created_at) DESC
+            SELECT 
+                id, role, organisation_id, input_by, date_received, date_recorded,
+                camp_name, camp_id, country, region, town, village_name,
+                latitude, longitude, event_date, time_range, event_location_detail,
+                event_type, event_subtype, affected_status, affected_number,
+                ethnicity, affected_target, impact_description, affiliation,
+                age, gender, perpetrator_description, involved_category,
+                involvement_description, is_sensitive, is_anonymous, created_at
+            FROM cases
+            ORDER BY datetime(created_at) DESC
             """
         )
         rows = cur.fetchall()
@@ -671,8 +657,7 @@ if check_password():
 
                     #-------------  DELETE Action end here ----------#   
 
-            #View Case Based on Analytics
-            # April 19,2026
+            # View Case Based on Analytics (April 19,2026 Update)
             view_cases_page()
             st.markdown("### Export / upload filtered cases")
             if current_role == "Admin":
@@ -714,13 +699,13 @@ if check_password():
 
         # Aligned with etl.py namespaces
         PREFIXES = """PREFIX hds: <http://example.org/hds#>
-PREFIX res: <https://fieldlab1.example.org/resource/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX dct: <http://purl.org/dc/terms/>
-PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-"""
+                    PREFIX res: <https://fieldlab1.example.org/resource/>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                    PREFIX dct: <http://purl.org/dc/terms/>
+                    PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+                    """
 
         if interface_mode == "Graphical User Interface":
             st.markdown("### 🌍 Geographic Scope")
@@ -793,16 +778,16 @@ PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
         else:
             st.markdown("### 💻 Expert SPARQL Console")
             default_expert_query = f"""{PREFIXES}
-SELECT ?incident ?eventType ?date ?camp
-WHERE {{
-  ?incident rdf:type hds:Incident ;
-            dct:type ?eventType ;
-            dct:date ?date ;
-            hds:fromLocation ?loc .
-  ?loc rdfs:label ?camp .
-}}
-ORDER BY DESC(?date)
-LIMIT 25"""
+            SELECT ?incident ?eventType ?date ?camp
+            WHERE {{
+            ?incident rdf:type hds:Incident ;
+                        dct:type ?eventType ;
+                        dct:date ?date ;
+                        hds:fromLocation ?loc .
+            ?loc rdfs:label ?camp .
+            }}
+            ORDER BY DESC(?date)
+            LIMIT 25"""
             query_to_run = st.text_area("SPARQL Editor", value=default_expert_query, height=300)
             
         if st.button("▶️ Execute SPARQL Query"):
