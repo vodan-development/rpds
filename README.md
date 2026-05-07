@@ -34,8 +34,8 @@ The application follows a modular architecture:
     <https://www.anaconda.com/download/success?reg=skipped>
 
   #### 2. Install Python
-  Get the latest python installer
-    <https://www.python.org/downloads/>
+    Get the latest python installer
+      <https://www.python.org/downloads/>
   
   
 ```markdown
