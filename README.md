@@ -1,7 +1,7 @@
-# FieldLab1 – Secure FAIR Refugee Protection Information System (RPDS)
+# Secure FAIR Refugee Protection Information System (RPDS)
 ## 1. Project Overview
 
-This repository contains the final implementation of FieldLab1, a secure, FAIR-aligned application designed for the structured collection, management, and semantic publication of refugee protection information. Developed by the **Aksum University Group** (Zinabu Haile, Haftom Mekonnen), this system bridges the gap between grassroots field reporting and high-level semantic interoperability.
+This repository contains the FAIR-aligned application designed for the structured collection, management, and semantic publication of refugee protection information. Developed by the **Aksum University Group** (Zinabu Haile, Haftom Mekonnen), this system bridges the gap between grassroots field reporting and high-level semantic interoperability.
 
 ## 2. Core Objectives
 
